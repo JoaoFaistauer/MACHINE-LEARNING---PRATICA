@@ -36,7 +36,7 @@ x_credit_risk[:,3] = labelencoder_renda.fit_transform(x_credit_risk[:,3])
 
 # %%
 
-with open ('credit_risk.pkl', mode='wb') as f:
+with open ('Models/credit_risk.pkl', mode='wb') as f:
     pickle.dump([x_credit_risk,y_credit_risk], f)
 
 # %%

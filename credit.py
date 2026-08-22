@@ -88,7 +88,7 @@ x_credit = scaler_credit.fit_transform(x_credit)
 # BASE DE TREINAMENTO E TESTE
 
 x_credit_treinamento , x_credit_teste , y_credit_treinamento , y_credit_teste = train_test_split(x_credit, y_credit, test_size=0.25, random_state=0)
-with open ('credit.pkl', mode = 'wb') as f:
+with open ('Models/credit.pkl', mode = 'wb') as f:
     pickle.dump([x_credit_treinamento, y_credit_treinamento, x_credit_teste, y_credit_teste], f)
 
 # %%

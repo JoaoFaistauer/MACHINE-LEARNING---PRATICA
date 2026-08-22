@@ -93,7 +93,7 @@ x_census_treinamento, x_census_teste, y_census_treinamento, y_census_teste = tra
     x_census, y_census, test_size=0.15, random_state=0
 )
 
-with open('census.pkl', mode='wb') as f:
+with open('Models/census.pkl', mode='wb') as f:
     pickle.dump([x_census_treinamento, y_census_treinamento, x_census_teste, y_census_teste], f)
 
 # %%
