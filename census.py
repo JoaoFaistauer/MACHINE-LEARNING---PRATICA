@@ -15,6 +15,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.linear_model import LogisticRegression
 from yellowbrick.classifier import ConfusionMatrix
 from collections import Counter
 
