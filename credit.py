@@ -17,6 +17,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 from yellowbrick.classifier import ConfusionMatrix
 from collections import Counter
 
+
 # %%
 # BASE DE DADOS
  
