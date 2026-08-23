@@ -13,6 +13,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from yellowbrick.classifier import ConfusionMatrix
 from collections import Counter
@@ -265,4 +266,41 @@ print(classification_report(y_credit_teste, predict_knn))
 mostrar_ranking()
 
 # %%
+# REGRESSÃO LOGISTICA - INICIO
+
+logistic_credit = LogisticRegression(random_state=1)
+logistic_credit.fit (x_credit_treinamento, y_credit_treinamento)
+
+# %%
+# REGRESSÃO LOGISTICA - PREVISOES
+
+predict_log = logistic_credit.predict(x_credit_teste)
+print('Previsão base de teste:\n', predict_log)
+linha()
+print('Gabarito base de teste:\n',y_credit_teste)
+
+# %%
+# REGRESSÃO LOGISTICA - COMPARAÇÃO
+
+resultados['Regressão Logistica'] = accuracy_score(y_credit_teste, predict_log)
+print('Accuracy Regressão Logistica:\n', accuracy_score(y_credit_teste, predict_log))
+linha()
+print('Matrix de confusão Regressão Logistica:\n', confusion_matrix(y_credit_teste,predict_log))
+
+# %%
+# REGRESSÃO LOGISTICA - ANALISE DE PRECISÃO
+
+cm = ConfusionMatrix(logistic_credit)
+cm.fit (x_credit_treinamento, y_credit_treinamento)
+cm.score(x_credit_teste, y_credit_teste)
+
+print(classification_report(y_credit_teste, predict_log))
+
+# %%
+# COMPARAÇÃO GERAL - ALGORITMOS
+
+mostrar_ranking()
+
+# %%
+
 

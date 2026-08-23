@@ -279,3 +279,39 @@ print(classification_report(y_census_teste, predict_knn))
 mostrar_ranking()
 
 # %%
+# REGRESSÃO LOGISTICA - INICIO
+
+logistic_census = LogisticRegression(random_state=1)
+logistic_census.fit(x_census_treinamento,y_census_treinamento)
+
+# %%
+# REGRESSÃO LOGISTICA - PREVISOES
+
+predict_log = logistic_census.predict(x_census_teste)
+print('Previsão base de teste:\n', predict_log)
+linha()
+print('Gabarito base de teste:\n', y_census_teste)
+
+# %%
+# REGRESSÃO LOGISTICA - COMPARAÇÃO
+
+resultados['Regressão Logistica'] = accuracy_score(y_census_teste, predict_log)
+print('Accuracy Regressão Logistica:\n', accuracy_score(y_census_teste, predict_log))
+linha()
+print('Matrix de confusão Regressão Logistica:\n', confusion_matrix(y_census_teste, predict_log))
+
+# %%
+# REGRESSÃO LOGISTICA - ANALISE DE PRECISÃO
+
+cm = ConfusionMatrix(logistic_census)
+cm.fit(x_census_treinamento.toarray(), y_census_treinamento)
+cm.score(x_census_teste.toarray(), y_census_teste)
+
+print(classification_report(y_census_teste , predict_log))
+
+# %%
+# COMPARAÇÃO GERAL - ALGORITMOS
+
+mostrar_ranking()
+
+# %%
