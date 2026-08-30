@@ -16,6 +16,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
 from yellowbrick.classifier import ConfusionMatrix
 from collections import Counter
 
@@ -148,9 +149,9 @@ min_accuracy = (24720/(24720 + 7841))
 def verifica_accuracy(accuracy_algoritmo):
     print('Min accuracy para um algoritmo nessa base é: {:f}'.format(min_accuracy))
     if  accuracy_algoritmo <= min_accuracy:
-        print ('\033[31mEsse algoritmo não é ideal para essa base de dados!\033[0m')
+        print ('\033[31mEsse algoritmo não é adequado para essa base de dados!\033[0m')
     else:
-        print('\033[92mEsse alogoritmo é ideal para esta base de dados!\033[0m')
+        print('\033[92mEsse alogoritmo é adequado para esta base de dados!\033[0m')
 
 # %%
 # APRENDIZAGEM POR REGRAS - COMPARAÇÕES FINAIS
@@ -299,6 +300,8 @@ resultados['Regressão Logistica'] = accuracy_score(y_census_teste, predict_log)
 print('Accuracy Regressão Logistica:\n', accuracy_score(y_census_teste, predict_log))
 linha()
 print('Matrix de confusão Regressão Logistica:\n', confusion_matrix(y_census_teste, predict_log))
+verifica_accuracy(accuracy_score(y_census_teste, predict_log))
+
 
 # %%
 # REGRESSÃO LOGISTICA - ANALISE DE PRECISÃO
@@ -308,6 +311,46 @@ cm.fit(x_census_treinamento.toarray(), y_census_treinamento)
 cm.score(x_census_teste.toarray(), y_census_teste)
 
 print(classification_report(y_census_teste , predict_log))
+
+# %%
+# COMPARAÇÃO GERAL - ALGORITMOS
+
+mostrar_ranking()
+
+# %%
+# SVM - INICIO
+
+svm_census = SVC(kernel='linear', random_state=1, C=2.00)
+svm_census.fit(x_census_treinamento,y_census_treinamento)
+
+
+# %%
+# SVM - PREVISOES
+
+predict_svm = svm_census.predict(x_census_teste)
+print('Previsao base de teste:\n', predict_svm)
+linha()
+print('Gabarito base de teste:\n', y_census_teste)
+
+
+# %%
+# SVM - COMPARAÇÃO
+
+resultados['SVM'] = accuracy_score(y_census_teste, predict_svm)
+print('Accuracy SVM:\n', accuracy_score(y_census_teste, predict_svm))
+linha()
+print('Matrix de confusão SVM:\n', confusion_matrix(y_census_teste,predict_svm))
+verifica_accuracy(accuracy_score(y_census_teste, predict_svm))
+
+
+# %%
+# SVM - ANALISE DE PRECISÃO
+
+cm = ConfusionMatrix(svm_census)
+cm.fit(x_census_treinamento.toarray(), y_census_treinamento)
+cm.score(x_census_teste.toarray(), y_census_teste)
+
+print(classification_report(y_census_teste, predict_svm))
 
 # %%
 # COMPARAÇÃO GERAL - ALGORITMOS

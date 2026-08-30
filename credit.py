@@ -14,6 +14,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from yellowbrick.classifier import ConfusionMatrix
 from collections import Counter
@@ -141,9 +142,9 @@ min_accuracy = (1717/2000)
 def verifica_accuracy(accuracy_algoritmo):
     print('Min accuracy para um algoritmo nessa base é: {:f}'.format(min_accuracy))
     if  accuracy_algoritmo <= min_accuracy:
-        print ('\033[31mEsse algoritmo não é ideal para essa base de dados!\033[0m')
+        print ('\033[31mEsse algoritmo não é adequado para essa base de dados!\033[0m')
     else:
-        print('\033[92mEsse alogoritmo é ideal para esta base de dados!\033[0m')
+        print('\033[92mEsse alogoritmo é adequado para esta base de dados!\033[0m')
 
 # %% 
 # APRENDIZAGEM POR REGRAS - COMPARAÇÕES FINAIS
@@ -250,6 +251,8 @@ resultados['kNN'] = accuracy_score(y_credit_teste, predict_knn)
 print('Accuracy algoritmo kNN:\n', accuracy_score(y_credit_teste, predict_knn))
 linha()
 print('Matrix de confusão algoritmo kNN:\n', confusion_matrix(y_credit_teste,predict_knn))
+verifica_accuracy(accuracy_score(y_credit_teste,predict_knn))
+
 
 # %%
 # ALGORITMO kNN (INSTANCIAS) - ANALISE DE PRECISÃO
@@ -286,6 +289,8 @@ resultados['Regressão Logistica'] = accuracy_score(y_credit_teste, predict_log)
 print('Accuracy Regressão Logistica:\n', accuracy_score(y_credit_teste, predict_log))
 linha()
 print('Matrix de confusão Regressão Logistica:\n', confusion_matrix(y_credit_teste,predict_log))
+verifica_accuracy(accuracy_score(y_credit_teste,predict_log))
+
 
 # %%
 # REGRESSÃO LOGISTICA - ANALISE DE PRECISÃO
@@ -302,5 +307,41 @@ print(classification_report(y_credit_teste, predict_log))
 mostrar_ranking()
 
 # %%
+# SVM - INICIO
 
+svm_credit = SVC(kernel='rbf', random_state=1, C= 2.00)
+svm_credit.fit(x_credit_treinamento, y_credit_treinamento)
 
+# %%
+# SVM - PREVISOES
+
+predict_svm = svm_credit.predict(x_credit_teste)
+print('Previsão base de teste:\n', predict_svm)
+linha()
+print('Gabarito base de teste:\n', y_credit_teste)
+
+# %%
+# SVM - COMPARAÇÃO
+
+resultados['SVM'] = accuracy_score(y_credit_teste, predict_svm)
+
+print('Accuracy SVM:\n',accuracy_score(y_credit_teste, predict_svm))
+linha()
+print('Matrix de confusão SVM\n', confusion_matrix(y_credit_teste, predict_svm))
+verifica_accuracy(accuracy_score(y_credit_teste, predict_svm))
+
+# %%
+# ANALISE DE PRECISÃO
+
+cm = ConfusionMatrix(svm_credit)
+cm.fit(x_credit_treinamento,y_credit_treinamento)
+cm.score(x_credit_teste,y_credit_teste)
+
+print(classification_report(y_credit_teste,predict_svm))
+
+# %%
+# COMPARAÇÃO GERAL - ALGORITMOS
+
+mostrar_ranking()
+
+# %%
